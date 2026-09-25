@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import type { PageTab, CompartmentTally } from './types';
-import { Navbar } from './components/Navbar';
 import { DemoModeModal } from './components/DemoModeModal';
 import { HomePage } from './pages/HomePage';
 import { ProblemPage } from './pages/ProblemPage';
@@ -13,7 +12,8 @@ import { SimulationPage } from './pages/SimulationPage';
 import { TrackingPage } from './pages/TrackingPage';
 import { ArchitecturePage } from './pages/ArchitecturePage';
 import { FeasibilityPage } from './pages/FeasibilityPage';
-import { ShieldCheck, Hospital, HeartHandshake } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
+import { Navbar } from './components/Navbar';
 import './App.css';
 
 export const App: React.FC = () => {

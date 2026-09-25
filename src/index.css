@@ -110,3 +110,43 @@ a {
 .hospital-map-waste {
   pointer-events: none;
 }
+
+.floorplan-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 900 / 540;
+  overflow: hidden;
+}
+
+.hospital-svg-floor {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.floorplan-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floorplan-overlay>* {
+  position: absolute;
+}
+
+.robot-world-position {
+  z-index: 30;
+  transition: left 0.75s linear, top 0.75s linear;
+}
+
+.hospital-map-wrapper {
+  width: 100%;
+}
+
+.waste-item-visual {
+  z-index: 20;
+  pointer-events: none;
+}

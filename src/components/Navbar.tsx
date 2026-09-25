@@ -29,16 +29,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navItems: { id: PageTab; label: string }[] = [
     { id: 'home', label: 'Home' },
-    { id: 'problem', label: 'Problem' },
-    { id: 'research', label: 'Research' },
     { id: 'solution', label: 'Solution' },
-    { id: 'robot', label: 'Robot' },
-    { id: 'classification', label: 'CPCB Waste' },
-    { id: 'ai-vision', label: 'AI Vision' },
     { id: 'simulation', label: 'Simulation' },
     { id: 'tracking', label: 'Tracking' },
-    { id: 'architecture', label: 'Architecture' },
-    { id: 'feasibility', label: 'Feasibility & Roadmap' },
   ];
 
   const handleTabClick = (tab: PageTab) => {

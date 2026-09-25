@@ -38,11 +38,10 @@ export const HospitalMap: React.FC<HospitalMapProps> = ({
 
       {/* Main Floor Plan Area */}
       <div className="floorplan-container">
-        {/* SVG Floor Architecture */}
         <svg
           viewBox="0 0 900 540"
           className="hospital-svg-floor"
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="none"
         >
           <defs>
             {/* Floor tile grid pattern */}
@@ -266,35 +265,31 @@ export const HospitalMap: React.FC<HospitalMapProps> = ({
           </g>
         </svg>
 
-        {/* 3 Waste Items (HTML/CSS overlays for rich animation) */}
-        {wasteItems.map((item) => (
-          <WasteItemVisual
-            key={item.id}
-            item={item}
-            isCurrentTarget={item.id === currentTargetWasteId && !item.collected}
-            robotPos={robotPos}
-          />
-        ))}
+        <div className="floorplan-overlay">
+          {wasteItems.map((item) => (
+            <WasteItemVisual
+              key={item.id}
+              item={item}
+              isCurrentTarget={item.id === currentTargetWasteId && !item.collected}
+              robotPos={robotPos}
+            />
+          ))}
 
-        {/* The MediTrack Robot Dynamic Position Container */}
-        <div
-          className="robot-world-position"
-          style={{
-            position: 'absolute',
-            left: `${(robotPos.x / 900) * 100}%`,
-            top: `${(robotPos.y / 540) * 100}%`,
-            transform: 'translate(-50%, -50%)',
-            transition: 'left 0.75s linear, top 0.75s linear',
-            zIndex: 30,
-            pointerEvents: 'none',
-          }}
-        >
-          <RobotVisual
-            state={robotState}
-            battery={battery}
-            compartments={compartments}
-            rotation={robotPos.rotation}
-          />
+          <div
+            className="robot-world-position"
+            style={{
+              left: `${(robotPos.x / 900) * 100}%`,
+              top: `${(robotPos.y / 540) * 100}%`,
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <RobotVisual
+              state={robotState}
+              battery={battery}
+              compartments={compartments}
+              rotation={robotPos.rotation}
+            />
+          </div>
         </div>
       </div>
 
