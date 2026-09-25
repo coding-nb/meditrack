@@ -68,7 +68,7 @@ export const HospitalMap: React.FC<HospitalMapProps> = ({
           {/* ================= CORRIDOR ================= */}
           {/* Main Corridor Pathway */}
           <rect x="30" y="240" width="840" height="130" fill="#0f172a" stroke="#1e293b" strokeWidth="1" />
-          
+
           {/* AGV Navigation Guidance Track Line */}
           <line
             x1="110"
@@ -105,7 +105,7 @@ export const HospitalMap: React.FC<HospitalMapProps> = ({
             <rect x="270" y="238" width="60" height="5" fill="#0f172a" />
             <line x1="270" y1="240" x2="270" y2="210" stroke="#f59e0b" strokeWidth="2" strokeDasharray="3 3" />
             <text x="300" y="235" fill="#f59e0b" fontSize="8" textAnchor="middle" fontWeight="bold">DOOR 101</text>
-            
+
             {/* Room Label */}
             <rect x="200" y="40" width="110" height="24" rx="4" fill="#1e293b" />
             <text x="210" y="56" fill="#38bdf8" fontSize="11" fontWeight="700">ROOM 1</text>
@@ -173,7 +173,7 @@ export const HospitalMap: React.FC<HospitalMapProps> = ({
             {/* Dock Area outline */}
             <rect x="40" y="390" width="140" height="135" rx="8" fill="#0a1820" stroke="#10b981" strokeWidth="1.5" />
             <circle cx="110" cy="460" r="45" fill="url(#dockGlow)" />
-            
+
             {/* Wireless Induction Charging Pads */}
             <rect x="75" y="425" width="70" height="70" rx="8" fill="#064e3b" stroke="#10b981" strokeWidth="2" strokeDasharray="6 3" />
             <circle cx="110" cy="460" r="22" fill="none" stroke="#34d399" strokeWidth="2" />
@@ -240,7 +240,7 @@ export const HospitalMap: React.FC<HospitalMapProps> = ({
             <text x="475" y="418" fill="#38bdf8" fontSize="10" fontWeight="bold" letterSpacing="1">
               CENTRAL TELEMETRY & ROBOTIC FLEET DISPATCH
             </text>
-            
+
             {/* Monitor console representations */}
             <rect x="475" y="435" width="115" height="50" rx="4" fill="#0f172a" stroke="#1e293b" />
             <text x="485" y="452" fill="#64748b" fontSize="8">FLEET STATUS</text>

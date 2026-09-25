@@ -95,13 +95,18 @@ a {
   background: #94a3b8;
 }
 
-.simulation-room {
+.hospital-map-container {
   position: relative;
+  width: 100%;
   overflow: hidden;
 }
 
-.waste-item {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 5;
+.hospital-map-container svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hospital-map-waste {
+  pointer-events: none;
 }
