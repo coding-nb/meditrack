@@ -57,8 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div className="brand-text">
             <div className="brand-title-line">
-              <span className="brand-main">MEDiTRACK</span>
-              <span className="brand-tag">SIH 2026 CONCEPT</span>
+              <span className="brand-main">MEDITRACK</span>
             </div>
             <span className="brand-sub">Autonomous Medical Waste &amp; Digital Segregation</span>
           </div>
