@@ -80,22 +80,25 @@ export const SimulationPage: React.FC = () => {
   speedRef.current = speedMultiplier;
 
   // Add event helper
-  const addEvent = useCallback((message: string, state: RobotState | 'ERROR', loc: string, cat?: any, name?: string) => {
-    const now = new Date();
-    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-    setEvents((prev) => [
-      ...prev,
-      {
-        id: `ev-${Date.now()}-${Math.random()}`,
-        timestamp: timeStr,
-        eventType: state,
-        message,
-        location: loc,
-        wasteCategory: cat,
-        wasteName: name,
-      },
-    ]);
-  }, []);
+  const addEvent = useCallback(
+    (message: string, state: RobotState | 'ERROR', loc: string, cat?: any, name?: string) => {
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+      setEvents((prev) => [
+        ...prev,
+        {
+          id: `ev-${Date.now()}-${Math.random()}`,
+          timestamp: timeStr,
+          eventType: state,
+          message,
+          location: loc,
+          wasteCategory: cat,
+          wasteName: name,
+        },
+      ]);
+    },
+    []
+  );
 
   // Reset
   const handleReset = useCallback(() => {
@@ -493,7 +496,7 @@ const handleResume = () => {
 const totalCollected = compartments.yellow + compartments.red + compartments.white + compartments.blue;
 
 return (
-  <div className="page-view simulation-page">
+  <div className="simulation-room">
     {/* Simulation Header Bar */}
     <div className="sim-masthead-bar">
       <div className="sim-title-group">
