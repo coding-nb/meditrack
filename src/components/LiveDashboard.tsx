@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import type {
   RobotState,
   WasteItem,
-  CompartmentCounts,
-  LogEntry,
+  CompartmentTally,
+  SimulationEvent,
   PipelineStep,
 } from '../types';
 import { AIVisionPanel } from './AIVisionPanel';
@@ -27,11 +27,11 @@ interface LiveDashboardProps {
   robotState: RobotState;
   currentLocationName: string;
   battery: number;
-  compartments: CompartmentCounts;
+  compartments: CompartmentTally;
   totalCollected: number;
   totalWasteCount: number;
   detectedItem: WasteItem | null;
-  logs: LogEntry[];
+  logs: SimulationEvent[];
   pipelineStep: PipelineStep | null;
   isRunning: boolean;
   isPaused: boolean;
@@ -72,7 +72,7 @@ export const LiveDashboard: React.FC<LiveDashboardProps> = ({
   }, [logs]);
 
   // Color mapping for states
-  const getStateColor = (state: RobotState) => {
+  const getStateColor = (state: RobotState | string) => {
     switch (state) {
       case 'IDLE':
         return '#64748b';
@@ -86,6 +86,10 @@ export const LiveDashboard: React.FC<LiveDashboardProps> = ({
         return '#f59e0b';
       case 'SEGREGATING':
         return '#d97706';
+      case 'TRACKING':
+        return '#0ea5e9';
+      case 'RETURNING':
+        return '#6366f1';
       case 'COMPLETED':
         return '#10b981';
       default:
@@ -257,78 +261,102 @@ export const LiveDashboard: React.FC<LiveDashboardProps> = ({
       <div className="compartment-section-card">
         <div className="section-title-row">
           <span className="section-badge">INTERNAL COMPARTMENTS</span>
-          <span className="section-subtext">Tri-Chamber Sealed Segregation Vault</span>
+          <span className="section-subtext">4-Chamber CPCB Sealed Segregation Vault</span>
         </div>
 
         <div className="compartments-row">
-          {/* Compartment 1: Sharps */}
+          {/* Compartment 1: YELLOW (Soiled) */}
           <div
             className={`compartment-item-card ${
-              compartments.sharps > 0 ? 'compartment-filled' : ''
+              compartments.yellow > 0 ? 'compartment-filled' : ''
+            }`}
+            style={{ borderColor: '#eab308' }}
+          >
+            <div className="comp-header">
+              <div className="comp-tag-wrap" style={{ color: '#ca8a04' }}>
+                <Flame size={16} />
+                <span className="comp-name">YELLOW</span>
+              </div>
+              <span className="comp-count-bubble" style={{ backgroundColor: '#ca8a04' }}>
+                {compartments.yellow}
+              </span>
+            </div>
+            <div className="comp-body">
+              <span className="comp-desc">Soiled dressings, infectious</span>
+              <span className="comp-status-text">
+                {compartments.yellow > 0 ? `${compartments.yellow} Item(s) Stored` : 'Empty'}
+              </span>
+            </div>
+          </div>
+
+          {/* Compartment 2: RED (Recyclable) */}
+          <div
+            className={`compartment-item-card ${
+              compartments.red > 0 ? 'compartment-filled' : ''
             }`}
             style={{ borderColor: '#ef4444' }}
           >
             <div className="comp-header">
-              <div className="comp-tag-wrap" style={{ color: '#ef4444' }}>
-                <Flame size={16} />
-                <span className="comp-name">SHARPS</span>
+              <div className="comp-tag-wrap" style={{ color: '#dc2626' }}>
+                <Recycle size={16} />
+                <span className="comp-name">RED</span>
               </div>
-              <span className="comp-count-bubble" style={{ backgroundColor: '#ef4444' }}>
-                {compartments.sharps}
+              <span className="comp-count-bubble" style={{ backgroundColor: '#dc2626' }}>
+                {compartments.red}
+              </span>
+            </div>
+            <div className="comp-body">
+              <span className="comp-desc">Contaminated recyclable plastics</span>
+              <span className="comp-status-text">
+                {compartments.red > 0 ? `${compartments.red} Item(s) Stored` : 'Empty'}
+              </span>
+            </div>
+          </div>
+
+          {/* Compartment 3: WHITE (Sharps) */}
+          <div
+            className={`compartment-item-card ${
+              compartments.white > 0 ? 'compartment-filled' : ''
+            }`}
+            style={{ borderColor: '#94a3b8' }}
+          >
+            <div className="comp-header">
+              <div className="comp-tag-wrap" style={{ color: '#475569' }}>
+                <AlertTriangle size={16} />
+                <span className="comp-name">WHITE</span>
+              </div>
+              <span className="comp-count-bubble" style={{ backgroundColor: '#475569' }}>
+                {compartments.white}
               </span>
             </div>
             <div className="comp-body">
               <span className="comp-desc">Syringes, needles, scalpels</span>
               <span className="comp-status-text">
-                {compartments.sharps > 0 ? '1 Item Stored' : 'Empty'}
+                {compartments.white > 0 ? `${compartments.white} Item(s) Stored` : 'Empty'}
               </span>
             </div>
           </div>
 
-          {/* Compartment 2: Infectious */}
+          {/* Compartment 4: BLUE (Glassware) */}
           <div
             className={`compartment-item-card ${
-              compartments.infectious > 0 ? 'compartment-filled' : ''
+              compartments.blue > 0 ? 'compartment-filled' : ''
             }`}
-            style={{ borderColor: '#f59e0b' }}
+            style={{ borderColor: '#3b82f6' }}
           >
             <div className="comp-header">
-              <div className="comp-tag-wrap" style={{ color: '#f59e0b' }}>
-                <AlertTriangle size={16} />
-                <span className="comp-name">INFECTIOUS</span>
+              <div className="comp-tag-wrap" style={{ color: '#2563eb' }}>
+                <Layers size={16} />
+                <span className="comp-name">BLUE</span>
               </div>
-              <span className="comp-count-bubble" style={{ backgroundColor: '#f59e0b' }}>
-                {compartments.infectious}
+              <span className="comp-count-bubble" style={{ backgroundColor: '#2563eb' }}>
+                {compartments.blue}
               </span>
             </div>
             <div className="comp-body">
-              <span className="comp-desc">Bandages, soiled dressings</span>
+              <span className="comp-desc">Glassware, metallic implants</span>
               <span className="comp-status-text">
-                {compartments.infectious > 0 ? '1 Item Stored' : 'Empty'}
-              </span>
-            </div>
-          </div>
-
-          {/* Compartment 3: Recyclable */}
-          <div
-            className={`compartment-item-card ${
-              compartments.recyclable > 0 ? 'compartment-filled' : ''
-            }`}
-            style={{ borderColor: '#06b6d4' }}
-          >
-            <div className="comp-header">
-              <div className="comp-tag-wrap" style={{ color: '#06b6d4' }}>
-                <Recycle size={16} />
-                <span className="comp-name">RECYCLABLE</span>
-              </div>
-              <span className="comp-count-bubble" style={{ backgroundColor: '#06b6d4' }}>
-                {compartments.recyclable}
-              </span>
-            </div>
-            <div className="comp-body">
-              <span className="comp-desc">Medicine bottles, plastics</span>
-              <span className="comp-status-text">
-                {compartments.recyclable > 0 ? '1 Item Stored' : 'Empty'}
+                {compartments.blue > 0 ? `${compartments.blue} Item(s) Stored` : 'Empty'}
               </span>
             </div>
           </div>
@@ -342,7 +370,7 @@ export const LiveDashboard: React.FC<LiveDashboardProps> = ({
       <WorkflowPipeline
         currentStep={pipelineStep}
         activeWasteName={detectedItem?.name}
-        activeCategory={detectedItem?.category}
+        activeCategory={detectedItem?.cpcbCategory}
       />
 
       {/* Real-time Telemetry Event Log */}
@@ -358,15 +386,15 @@ export const LiveDashboard: React.FC<LiveDashboardProps> = ({
         <div className="event-log-feed" ref={logContainerRef}>
           {logs.map((entry) => (
             <div key={entry.id} className="log-row">
-              <span className="log-timestamp">[{entry.time}]</span>
+              <span className="log-timestamp">[{entry.timestamp}]</span>
               <span
                 className="log-state-badge"
                 style={{
-                  color: getStateColor(entry.state),
-                  backgroundColor: `${getStateColor(entry.state)}20`,
+                  color: getStateColor(entry.eventType),
+                  backgroundColor: `${getStateColor(entry.eventType)}20`,
                 }}
               >
-                {entry.state}
+                {entry.eventType}
               </span>
               <span className="log-message-text">{entry.message}</span>
             </div>

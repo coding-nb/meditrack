@@ -17,6 +17,8 @@ export const AIVisionPanel: React.FC<AIVisionPanelProps> = ({
     robotState === 'COLLECTING' ||
     robotState === 'SEGREGATING';
 
+  const confidence = detectedItem?.simulatedConfidence ?? detectedItem?.confidence ?? 0;
+
   return (
     <div className="ai-vision-panel-card">
       {/* Panel Top Label */}
@@ -58,7 +60,7 @@ export const AIVisionPanel: React.FC<AIVisionPanelProps> = ({
                 style={{ borderColor: detectedItem.color }}
               >
                 <div className="vf-box-tag" style={{ backgroundColor: detectedItem.color }}>
-                  {detectedItem.name.toUpperCase()} [{detectedItem.confidence}%]
+                  {detectedItem.name.toUpperCase()} [{confidence}%]
                 </div>
                 {/* Crosshair inside box */}
                 <Crosshair size={28} className="box-crosshair" style={{ color: detectedItem.color }} />
@@ -97,7 +99,7 @@ export const AIVisionPanel: React.FC<AIVisionPanelProps> = ({
             <div className="category-pill-box" style={{ borderColor: detectedItem.color }}>
               <span className="category-pill-label">CLASSIFICATION</span>
               <span className="category-pill-val" style={{ color: detectedItem.color }}>
-                {detectedItem.category}
+                {detectedItem.cpcbCategory}
               </span>
             </div>
           </div>
@@ -107,14 +109,14 @@ export const AIVisionPanel: React.FC<AIVisionPanelProps> = ({
             <div className="confidence-header">
               <span className="confidence-label">AI Classification Confidence</span>
               <span className="confidence-val" style={{ color: detectedItem.color }}>
-                {detectedItem.confidence}%
+                {confidence}%
               </span>
             </div>
             <div className="confidence-track">
               <div
                 className="confidence-fill"
                 style={{
-                  width: `${detectedItem.confidence}%`,
+                  width: `${confidence}%`,
                   backgroundColor: detectedItem.color,
                 }}
               />
@@ -126,7 +128,7 @@ export const AIVisionPanel: React.FC<AIVisionPanelProps> = ({
             <ShieldAlert size={16} className="target-shield-icon" style={{ color: detectedItem.color }} />
             <div className="bin-target-text">
               <span className="bin-tag-small">SEGREGATION ASSIGNMENT</span>
-              <span className="bin-tag-name">{detectedItem.binTarget}</span>
+              <span className="bin-tag-name">{detectedItem.containerType}</span>
             </div>
           </div>
         </div>

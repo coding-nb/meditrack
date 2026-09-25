@@ -7,11 +7,30 @@ interface WasteItemVisualProps {
   robotPos: { x: number; y: number };
 }
 
+/** Derive an icon type from the CPCB category for visual display */
+function getIconType(item: WasteItem): 'syringe' | 'bandage' | 'bottle' | 'ampoule' {
+  if (item.iconName) return item.iconName as any;
+  switch (item.cpcbCategory) {
+    case 'WHITE':
+      return 'syringe';
+    case 'YELLOW':
+      return 'bandage';
+    case 'BLUE':
+      return 'ampoule';
+    case 'RED':
+    default:
+      return 'bottle';
+  }
+}
+
 export const WasteItemVisual: React.FC<WasteItemVisualProps> = ({
   item,
   isCurrentTarget,
 }) => {
   if (item.collected) return null;
+
+  const iconType = getIconType(item);
+  const bg = item.badgeBg || item.bgTint || `${item.color}15`;
 
   return (
     <div
@@ -44,13 +63,13 @@ export const WasteItemVisual: React.FC<WasteItemVisualProps> = ({
         className="waste-graphic-box"
         style={{
           border: `1.5px solid ${item.color}`,
-          background: item.badgeBg,
+          background: bg,
           boxShadow: isCurrentTarget
             ? `0 0 16px ${item.color}88, inset 0 0 8px ${item.color}44`
             : `0 2px 8px rgba(0, 0, 0, 0.4)`,
         }}
       >
-        {item.iconName === 'syringe' && (
+        {iconType === 'syringe' && (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke={item.color} strokeWidth="2">
             {/* Syringe SVG */}
             <path d="m18 2 4 4" strokeLinecap="round" />
@@ -62,7 +81,7 @@ export const WasteItemVisual: React.FC<WasteItemVisualProps> = ({
           </svg>
         )}
 
-        {item.iconName === 'bandage' && (
+        {iconType === 'bandage' && (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke={item.color} strokeWidth="2">
             {/* Bandage SVG */}
             <rect x="4" y="4" width="16" height="16" rx="3" transform="rotate(45 12 12)" strokeLinecap="round" />
@@ -74,7 +93,7 @@ export const WasteItemVisual: React.FC<WasteItemVisualProps> = ({
           </svg>
         )}
 
-        {item.iconName === 'bottle' && (
+        {iconType === 'bottle' && (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke={item.color} strokeWidth="2">
             {/* Plastic Medicine Bottle */}
             <rect x="7" y="7" width="10" height="14" rx="2" strokeLinecap="round" />
@@ -83,13 +102,21 @@ export const WasteItemVisual: React.FC<WasteItemVisualProps> = ({
             <line x1="9" y1="14" x2="15" y2="14" strokeLinecap="round" />
           </svg>
         )}
+
+        {iconType === 'ampoule' && (
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke={item.color} strokeWidth="2">
+            <path d="M10 2h4v4l-2 3-2-3V2z" strokeLinecap="round" />
+            <path d="M8 9h8v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9z" strokeLinecap="round" />
+            <line x1="10" y1="14" x2="14" y2="14" strokeLinecap="round" />
+          </svg>
+        )}
       </div>
 
       {/* Floating Label */}
       <div className="waste-floating-label">
         <span className="waste-name">{item.name}</span>
         <span className="waste-category-pill" style={{ color: item.color }}>
-          {item.category}
+          {item.cpcbCategory}
         </span>
       </div>
     </div>
