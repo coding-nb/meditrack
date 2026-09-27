@@ -1,4 +1,4 @@
-addimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import type { PageTab, CompartmentTally } from './types';
 import { DemoModeModal } from './components/DemoModeModal';
 import { HomePage } from './pages/HomePage';
