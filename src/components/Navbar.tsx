@@ -32,6 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'solution', label: 'Solution' },
     { id: 'simulation', label: 'Simulation' },
     { id: 'tracking', label: 'Tracking' },
+    { id: 'designs', label: 'Designs' },
   ];
 
   const handleTabClick = (tab: PageTab) => {

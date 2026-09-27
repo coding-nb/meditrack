@@ -10,7 +10,8 @@ export type PageTab =
   | 'simulation'
   | 'tracking'
   | 'architecture'
-  | 'feasibility';
+  | 'feasibility'
+  | 'designs';
 
 // ─── Robot State Machine ──────────────────────────────────────
 export type RobotState =

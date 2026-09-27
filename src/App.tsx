@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+addimport React, { useState } from 'react';
 import type { PageTab, CompartmentTally } from './types';
 import { DemoModeModal } from './components/DemoModeModal';
 import { HomePage } from './pages/HomePage';
@@ -12,6 +12,7 @@ import { SimulationPage } from './pages/SimulationPage';
 import { TrackingPage } from './pages/TrackingPage';
 import { ArchitecturePage } from './pages/ArchitecturePage';
 import { FeasibilityPage } from './pages/FeasibilityPage';
+import { DesignsPage } from './pages/DesignsPage';
 import { ShieldCheck } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import './App.css';
@@ -72,6 +73,7 @@ export const App: React.FC = () => {
         )}
         {activeTab === 'architecture' && <ArchitecturePage />}
         {activeTab === 'feasibility' && <FeasibilityPage />}
+        {activeTab === 'designs' && <DesignsPage />}
       </main>
 
       {/* Guided Presentation Modal for Judges */}
